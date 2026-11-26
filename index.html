@@ -693,6 +693,275 @@
       flex-shrink: 0;
     }
 
+    /* 大圖對照表模式樣式 */
+    .ref-toolbar {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 18px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .ref-toolbar-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .ref-search-wrap {
+      flex: 1;
+      min-width: 240px;
+      position: relative;
+    }
+
+    .ref-search-input {
+      width: 100%;
+      padding: 10px 14px 10px 36px;
+      border-radius: 12px;
+      border: 1.5px solid var(--border);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+      background: var(--surface-alt);
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .ref-search-input:focus {
+      outline: none;
+      border-color: var(--herb-600);
+      background: #fff;
+    }
+
+    .ref-search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      pointer-events: none;
+      opacity: 0.65;
+    }
+
+    .ref-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ref-toggle-btn {
+      border: 1.5px solid var(--border);
+      background: #fff;
+      color: var(--text-main);
+      padding: 9px 14px;
+      border-radius: 11px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+
+    .ref-toggle-btn:hover {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+    }
+
+    .ref-toggle-btn.active {
+      background: #0f172a;
+      color: #fff;
+      border-color: #0f172a;
+    }
+
+    .ref-cat-pills {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ref-pill {
+      border: 1px solid var(--border);
+      background: #f8fafc;
+      color: #475569;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .ref-pill:hover {
+      background: #eef2f6;
+    }
+
+    .ref-pill.active {
+      background: var(--herb-600);
+      color: #fff;
+      border-color: var(--herb-600);
+    }
+
+    .ref-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 18px;
+    }
+
+    @media (max-width: 640px) {
+      .ref-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .ref-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .ref-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .ref-img-box {
+      position: relative;
+      width: 100%;
+      height: 280px;
+      background: #111827;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      cursor: zoom-in;
+    }
+
+    .ref-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.25s ease;
+    }
+
+    .ref-img-box.fit-contain img {
+      object-fit: contain;
+    }
+
+    .ref-card:hover .ref-img-box img {
+      transform: scale(1.03);
+    }
+
+    .ref-num-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(15, 23, 42, 0.78);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 8px;
+      backdrop-filter: blur(4px);
+      pointer-events: none;
+    }
+
+    .ref-trap-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(245, 158, 11, 0.92);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 9px;
+      border-radius: 8px;
+      pointer-events: none;
+    }
+
+    .ref-body {
+      padding: 15px 16px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+    }
+
+    .ref-body.maskable {
+      cursor: pointer;
+    }
+
+    .ref-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .ref-name {
+      font-size: 19px;
+      font-weight: 900;
+      color: var(--text-main);
+    }
+
+    .ref-part-box {
+      background: var(--herb-50);
+      border: 1px solid var(--herb-200);
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-size: 15px;
+      color: var(--herb-900);
+    }
+
+    .ref-part-box strong {
+      font-weight: 900;
+      color: var(--herb-700);
+      font-size: 16px;
+    }
+
+    .ref-tip {
+      font-size: 12px;
+      color: var(--text-sub);
+      line-height: 1.45;
+      margin-top: auto;
+      padding-top: 4px;
+    }
+
+    /* 遮罩背誦模式效果 */
+    .ref-grid.blind-mode .ref-card:not(.revealed) .ref-name,
+    .ref-grid.blind-mode .ref-card:not(.revealed) .ref-part-box,
+    .ref-grid.blind-mode .ref-card:not(.revealed) .ref-tip {
+      filter: blur(7px);
+      user-select: none;
+      opacity: 0.65;
+    }
+
+    .ref-reveal-hint {
+      display: none;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--herb-700);
+      text-align: center;
+      background: var(--herb-100);
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+
+    .ref-grid.blind-mode .ref-card:not(.revealed) .ref-reveal-hint {
+      display: block;
+    }
+
     /* 圖片放大燈箱 */
     .lightbox {
       position: fixed;
@@ -790,6 +1059,7 @@
           <button onclick="setMode('identify')" id="tab-identify" class="mode-tab">🎯 選擇題（看圖選名稱＋部位）</button>
           <button onclick="setMode('part')" id="tab-part" class="mode-tab">🧬 選擇題（給藥名選藥用部位）</button>
           <button onclick="setMode('flashcard')" id="tab-flashcard" class="mode-tab">🃏 閃卡速刷</button>
+          <button onclick="setMode('reference')" id="tab-reference" class="mode-tab">📖 50種藥材大圖對照表</button>
         </div>
 
         <button onclick="reshuffleDeck()" class="btn-shuffle">
@@ -797,7 +1067,7 @@
         </button>
       </div>
 
-      <div class="control-bottom">
+      <div id="quizControlBottom" class="control-bottom">
         <div class="filter-group">
           <span style="font-size:12px; font-weight:700; color:#64748b;">題庫：</span>
           <button onclick="setFilter('all')" id="filter-all" class="filter-btn active">全部 50 題</button>
@@ -812,7 +1082,7 @@
         </div>
       </div>
 
-      <div class="progress-track">
+      <div id="quizProgressTrack" class="progress-track">
         <div id="progressBar" class="progress-fill" style="width: 2%;"></div>
       </div>
     </section>
@@ -820,24 +1090,15 @@
     <!-- 測驗舞台 -->
     <section id="quizStage"></section>
 
-    <!-- 頁尾快捷鍵說明與一覽表按鈕 -->
-    <footer>
+    <!-- 頁尾快捷鍵說明 -->
+    <footer id="quizFooter">
       <div>
         ⌨️ 快捷鍵：<kbd>Enter</kbd> 填充切換 / 送出 / 下一題 ・ <kbd>1</kbd>~<kbd>4</kbd> 選擇題 ・ <kbd>Space</kbd> 閃卡翻面
       </div>
-      <button onclick="toggleCheatSheet()" style="border:none; background:none; color:var(--herb-700); font-weight:800; cursor:pointer; font-size:13px;">
-        📖 展開 / 收合 50味藥圖文總表
+      <button onclick="setMode('reference')" style="border:none; background:none; color:var(--herb-700); font-weight:800; cursor:pointer; font-size:13px;">
+        📖 切換至 50味藥大圖對照表 →
       </button>
     </footer>
-
-    <!-- 可摺疊的 50 味藥總表 -->
-    <section id="cheatSheetPanel" class="card hidden" style="padding: 20px;">
-      <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
-        <h3 style="font-size:16px; font-weight:800;">115-1 藥學導論 50種中藥材完整對照表</h3>
-        <button onclick="toggleCheatSheet()" class="mini-btn">收合</button>
-      </div>
-      <div id="cheatSheetGrid" class="sheet-grid"></div>
-    </section>
   </main>
 
   <!-- 點擊圖片放大檢視燈箱 -->
@@ -907,7 +1168,7 @@
 
     // 狀態管理
     let resolvedImageUrls = {}; // herb.id -> 確定可載入的圖片路徑或 ObjectURL
-    let currentMode = 'fill';   // 'fill' | 'identify' | 'part' | 'flashcard'
+    let currentMode = 'fill';   // 'fill' | 'identify' | 'part' | 'flashcard' | 'reference'
     let currentFilter = 'all';  // 'all' | 'trap' | 'wrong'
     let deck = [];
     let currentIndex = 0;
@@ -918,6 +1179,14 @@
     let isCardFlipped = false;
     let fillHintShown = false;
     let wrongIds = new Set(JSON.parse(localStorage.getItem('tcm_kmu_wrong_ids') || '[]'));
+
+    // 大圖對照表專屬狀態
+    let refOrderList = [...HERBS_DATA];
+    let refSearchQuery = '';
+    let refCategoryFilter = 'all'; // 'all' | 'trap' | 'root' | 'seed' | 'herb_leaf' | 'special' | 'wrong'
+    let refBlindMode = false;
+    let refRevealedIds = new Set();
+    let refImgContain = false;
 
     /**
      * 取得某味藥的所有候選相對路徑（同時相容放在照片資料夾內、或放在解壓縮外層資料夾旁）
@@ -951,7 +1220,10 @@
           checked++;
           updateAutoBadge(loadedCount, checked);
           // 若當前畫面正好顯示這題且剛載入成功，立即刷新圖片
-          if (deck[currentIndex] && deck[currentIndex].id === herb.id) {
+          if (currentMode === 'reference') {
+            const refImg = document.getElementById(`ref-img-${herb.id}`);
+            if (refImg) refImg.src = candidates[idx];
+          } else if (deck[currentIndex] && deck[currentIndex].id === herb.id) {
             renderCurrentQuestion();
           }
         };
@@ -1036,7 +1308,6 @@
         badge.textContent = `✅ 已手動載入圖片 (${matched}/50)`;
         showToast(`成功載入 ${matched} 張藥材圖片！`);
         renderCurrentQuestion();
-        renderCheatSheet();
       } else {
         showToast('未偵測到 1.三七.JPG ~ 50.神麴.JPG 編號圖片');
       }
@@ -1081,7 +1352,17 @@
       currentMode = mode;
       document.querySelectorAll('.mode-tab').forEach(btn => btn.classList.remove('active'));
       document.getElementById(`tab-${mode}`).classList.add('active');
-      reshuffleDeck(false);
+
+      const isRef = mode === 'reference';
+      document.getElementById('quizControlBottom').classList.toggle('hidden', isRef);
+      document.getElementById('quizProgressTrack').classList.toggle('hidden', isRef);
+      document.getElementById('quizFooter').classList.toggle('hidden', isRef);
+
+      if (isRef) {
+        renderReferenceView();
+      } else {
+        reshuffleDeck(false);
+      }
     }
 
     function setFilter(filter) {
@@ -1096,6 +1377,14 @@
     }
 
     function reshuffleDeck(notify = true) {
+      if (currentMode === 'reference') {
+        refOrderList = shuffleArray(HERBS_DATA);
+        refRevealedIds.clear();
+        renderReferenceView();
+        if (notify) showToast('已將 50 種藥材大圖對照表隨機打散！');
+        return;
+      }
+
       let pool = [...HERBS_DATA];
       if (currentFilter === 'trap') {
         pool = pool.filter(h => h.isTrap);
@@ -1176,6 +1465,11 @@
 
     // 渲染當前題目
     function renderCurrentQuestion() {
+      if (currentMode === 'reference') {
+        renderReferenceView();
+        return;
+      }
+
       const stage = document.getElementById('quizStage');
 
       // 一輪結束畫面
@@ -1566,33 +1860,202 @@
         showToast('已加入錯題本');
       }
       saveWrongIds();
-      renderCurrentQuestion();
-    }
-
-    function toggleCheatSheet() {
-      const panel = document.getElementById('cheatSheetPanel');
-      panel.classList.toggle('hidden');
-      if (!panel.classList.contains('hidden')) {
-        renderCheatSheet();
-        panel.scrollIntoView({ behavior: 'smooth' });
+      if (currentMode === 'reference') {
+        renderReferenceCardsOnly();
+      } else {
+        renderCurrentQuestion();
       }
     }
 
-    function renderCheatSheet() {
-      const grid = document.getElementById('cheatSheetGrid');
-      grid.innerHTML = HERBS_DATA.map(herb => {
+    /**
+     * 大圖對照表模式：完整渲染工具列與卡片區
+     */
+    function renderReferenceView() {
+      const stage = document.getElementById('quizStage');
+      stage.innerHTML = `
+        <div class="card" style="padding: 20px;">
+          <div class="ref-toolbar">
+            <div class="ref-toolbar-top">
+              <div class="ref-search-wrap">
+                <span class="ref-search-icon">🔍</span>
+                <input
+                  id="refSearchInput"
+                  type="text"
+                  class="ref-search-input"
+                  value="${refSearchQuery}"
+                  placeholder="搜尋編號、藥材名稱或藥用部位（例如：根莖、塊根、種子、川烏）..."
+                  oninput="handleRefSearch(this.value)"
+                />
+              </div>
+
+              <div class="ref-actions">
+                <button onclick="toggleRefBlindMode()" id="btnRefBlind" class="ref-toggle-btn ${refBlindMode ? 'active' : ''}">
+                  ${refBlindMode ? '👁️ 顯示全部答案' : '🙈 遮罩背誦模式'}
+                </button>
+                <button onclick="toggleRefImgFit()" id="btnRefFit" class="ref-toggle-btn ${refImgContain ? 'active' : ''}" title="切換滿版裁切或完整比例顯示">
+                  ${refImgContain ? '🖼️ 完整比例' : '🖼️ 滿版大圖'}
+                </button>
+                <button onclick="resetRefOrder()" class="ref-toggle-btn">
+                  🔢 1~50 依序排列
+                </button>
+              </div>
+            </div>
+
+            <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;">
+              <div class="ref-cat-pills">
+                <button onclick="setRefCat('all')" class="ref-pill ${refCategoryFilter === 'all' ? 'active' : ''}">全部 (50)</button>
+                <button onclick="setRefCat('trap')" class="ref-pill ${refCategoryFilter === 'trap' ? 'active' : ''}">🔥 易混淆陷阱</button>
+                <button onclick="setRefCat('root')" class="ref-pill ${refCategoryFilter === 'root' ? 'active' : ''}">🌱 根與根莖家族 (24)</button>
+                <button onclick="setRefCat('seed')" class="ref-pill ${refCategoryFilter === 'seed' ? 'active' : ''}">🌾 種子與地上部分 (11)</button>
+                <button onclick="setRefCat('special')" class="ref-pill ${refCategoryFilter === 'special' ? 'active' : ''}">✨ 唯一特例 (15)</button>
+                <button onclick="setRefCat('wrong')" class="ref-pill ${refCategoryFilter === 'wrong' ? 'active' : ''}">📌 錯題本 (${wrongIds.size})</button>
+              </div>
+              <div id="refCountLabel" style="font-size:12px; font-weight:700; color:var(--text-sub);"></div>
+            </div>
+          </div>
+
+          <div id="refGridContainer" class="ref-grid ${refBlindMode ? 'blind-mode' : ''}"></div>
+        </div>
+      `;
+      renderReferenceCardsOnly();
+    }
+
+    function getFilteredReferenceList() {
+      const q = normalizeText(refSearchQuery);
+      return refOrderList.filter(herb => {
+        if (refCategoryFilter === 'trap' && !herb.isTrap) return false;
+        if (refCategoryFilter === 'root' && herb.category !== '根與根莖家族') return false;
+        if (refCategoryFilter === 'seed' && herb.category !== '種子與地上部分') return false;
+        if (refCategoryFilter === 'special' && herb.category !== '唯一特例') return false;
+        if (refCategoryFilter === 'wrong' && !wrongIds.has(herb.id)) return false;
+
+        if (q) {
+          const matchId = String(herb.id) === q;
+          const matchName = (herb.aliases || [herb.name]).some(a => normalizeText(a).includes(q));
+          const matchPart = normalizeText(herb.part).includes(q);
+          const matchCat = normalizeText(herb.category).includes(q);
+          return matchId || matchName || matchPart || matchCat;
+        }
+        return true;
+      });
+    }
+
+    function renderReferenceCardsOnly() {
+      const grid = document.getElementById('refGridContainer');
+      const countLabel = document.getElementById('refCountLabel');
+      if (!grid) return;
+
+      const list = getFilteredReferenceList();
+      if (countLabel) {
+        countLabel.textContent = `顯示 ${list.length} / 50 味藥材（點擊圖片可全螢幕放大）`;
+      }
+
+      if (list.length === 0) {
+        grid.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align:center; padding: 48px 16px; color: var(--text-sub);">
+            <div style="font-size: 36px; margin-bottom: 8px;">🔍</div>
+            <div style="font-size: 15px; font-weight: 700;">沒有符合條件的中藥材</div>
+            <button onclick="resetRefFilters()" class="mini-btn" style="margin-top: 12px;">清除篩選條件</button>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = list.map(herb => {
         const src = resolvedImageUrls[herb.id] || getCandidatePaths(herb)[0];
+        const isBookmarked = wrongIds.has(herb.id);
+        const isRevealed = refRevealedIds.has(herb.id);
         return `
-          <div class="sheet-item">
-            <img src="${src}" alt="${herb.name}" class="sheet-thumb" onclick="openLightbox(this.src)" style="cursor:zoom-in;" onerror="this.style.visibility='hidden'" />
-            <div style="min-width:0;">
-              <div style="font-size:14px; font-weight:800;">${herb.id}. ${herb.name}</div>
-              <div style="font-size:13px; font-weight:900; color:var(--herb-700);">${herb.part}</div>
-              <div style="font-size:11px; color:var(--text-sub);">${herb.category}</div>
+          <div id="ref-card-${herb.id}" class="ref-card ${isRevealed ? 'revealed' : ''}">
+            <div class="ref-img-box ${refImgContain ? 'fit-contain' : ''}" onclick="openLightbox(this.querySelector('img')?.src)" title="點擊放大檢視飲片細節">
+              <img
+                id="ref-img-${herb.id}"
+                src="${src}"
+                data-step="0"
+                alt="${herb.name}"
+                loading="lazy"
+                onerror="handleImgFallback(this, ${herb.id})"
+              />
+              <span class="ref-num-badge">#${herb.id}</span>
+              ${herb.isTrap ? '<span class="ref-trap-badge">🔥 易混淆</span>' : ''}
+              <span class="img-zoom-hint">🔍 放大</span>
+            </div>
+
+            <div class="ref-body ${refBlindMode ? 'maskable' : ''}" onclick="toggleSingleRefReveal(${herb.id})">
+              <div class="ref-reveal-hint">👆 點擊文字區揭曉名稱與藥用部位</div>
+              <div class="ref-header-row">
+                <div class="ref-name">${herb.id}. ${herb.name}</div>
+                <button
+                  onclick="event.stopPropagation(); toggleWrongBookmark(${herb.id})"
+                  class="mini-btn ${isBookmarked ? 'bookmarked' : ''}"
+                  title="加入或移出錯題本"
+                >
+                  ${isBookmarked ? '📌 已收錄' : '＋ 錯題'}
+                </button>
+              </div>
+
+              <div class="ref-part-box">
+                藥用部位：<strong>${herb.part}</strong>
+              </div>
+
+              <div class="ref-tip">
+                <span class="tag tag-green" style="font-size:11px; padding:2px 7px; margin-right:4px;">${herb.category}</span>
+                ${herb.hint}
+              </div>
             </div>
           </div>
         `;
       }).join('');
+    }
+
+    function handleRefSearch(val) {
+      refSearchQuery = val;
+      renderReferenceCardsOnly();
+    }
+
+    function setRefCat(cat) {
+      if (cat === 'wrong' && wrongIds.size === 0) {
+        showToast('目前錯題本是空的！');
+        return;
+      }
+      refCategoryFilter = cat;
+      renderReferenceView();
+    }
+
+    function resetRefFilters() {
+      refSearchQuery = '';
+      refCategoryFilter = 'all';
+      renderReferenceView();
+    }
+
+    function toggleRefBlindMode() {
+      refBlindMode = !refBlindMode;
+      refRevealedIds.clear();
+      renderReferenceView();
+      showToast(refBlindMode ? '已開啟遮罩背誦模式，點擊卡片文字區可單獨揭曉答案' : '已關閉遮罩背誦模式');
+    }
+
+    function toggleSingleRefReveal(id) {
+      if (!refBlindMode) return;
+      if (refRevealedIds.has(id)) {
+        refRevealedIds.delete(id);
+      } else {
+        refRevealedIds.add(id);
+      }
+      const card = document.getElementById(`ref-card-${id}`);
+      if (card) card.classList.toggle('revealed', refRevealedIds.has(id));
+    }
+
+    function toggleRefImgFit() {
+      refImgContain = !refImgContain;
+      renderReferenceView();
+    }
+
+    function resetRefOrder() {
+      refOrderList = [...HERBS_DATA];
+      refRevealedIds.clear();
+      renderReferenceCardsOnly();
+      showToast('已恢復為 1 ~ 50 依序排列');
     }
 
     // 鍵盤快捷鍵
@@ -1601,6 +2064,7 @@
         closeLightbox();
         return;
       }
+      if (currentMode === 'reference') return;
       if (currentIndex >= deck.length) return;
 
       if (currentMode === 'fill') {
