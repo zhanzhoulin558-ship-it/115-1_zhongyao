@@ -65,6 +65,11 @@
     border-color: #3f4756;
     box-shadow: 0 2px 6px rgba(0,0,0,0.25);
   }
+  .order-controls {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
   .shuffle-btn {
     background: #172554;
     color: #93c5fd;
@@ -77,6 +82,18 @@
     transition: 0.15s;
   }
   .shuffle-btn:hover { background: #1e3a8a; color: #fff; }
+  .sort-btn {
+    background: #1e293b;
+    color: #cbd5e1;
+    border: 1px solid #334155;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.15s;
+  }
+  .sort-btn:hover { background: #334155; color: #fff; }
 
   /* Filter & Stats Bar */
   .sub-bar {
@@ -241,14 +258,6 @@
   }
 
   /* Flashcard */
-  .flashcard {
-    min-height: 400px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    cursor: pointer;
-    user-select: none;
-  }
   .fc-back {
     display: none;
     text-align: center;
@@ -256,8 +265,9 @@
     background: #12151b;
     border-radius: 12px;
     border: 1px solid var(--border);
+    margin-bottom: 16px;
   }
-  .flashcard.flipped .fc-back { display: block; }
+  .fc-back.flipped { display: block; }
   .fc-name { font-size: 24px; font-weight: 700; margin-bottom: 6px; }
   .fc-core { font-size: 22px; font-weight: 800; color: #fb7185; margin-bottom: 6px; }
   .fc-full { font-size: 14px; color: var(--text-muted); margin-bottom: 8px; }
@@ -344,7 +354,10 @@
       <button class="tab-btn" data-mode="flash">🃏 閃卡速刷</button>
       <button class="tab-btn" data-mode="ref">📖 50種藥材大圖對照表</button>
     </div>
-    <button class="shuffle-btn" id="shuffleBtn">🔄 重新隨機洗牌</button>
+    <div class="order-controls">
+      <button class="sort-btn" id="sortBtn">🔢 依編號順序 (1→50)</button>
+      <button class="shuffle-btn" id="shuffleBtn">🔀 重新隨機洗牌</button>
+    </div>
   </div>
 
   <!-- Sub Bar -->
@@ -423,7 +436,7 @@
 <script>
 const HERBS = [
   { id: 1, file: "1.三七.JPG", name: "三七", aliases: ["田七"], core: "根及根莖", full: "乾燥根及根莖", cat: "root", trap: true, tip: "根在前、根莖在後（三七、山豆根、防風）" },
-  { id: 2, file: "2.三稜.JPG", name: "三稜", aliases: ["黑三稜"], core: "塊莖", full: "乾燥塊莖", cat: "root", trap: true, tip: "膨大變形類：塊莖只有三稜、莪朮、澤瀉" },
+  { id: 2, file: "2.三稜.JPG", name: "三稜", aliases: ["黑三稜"], core: "塊莖", full: "乾燥塊莖", cat: "root", trap: true, tip: "膨大變形類：塊莖只有三稜、澤瀉（注意莪朮是根莖）" },
   { id: 3, file: "3.山豆根.JPG", name: "山豆根", aliases: ["廣豆根"], core: "根及根莖", full: "乾燥根及根莖", cat: "root", trap: true, tip: "名有根，實為「根及根莖」" },
   { id: 4, file: "4.山茱萸.JPG", name: "山茱萸", aliases: ["山萸肉"], core: "果肉", full: "乾燥成熟果肉", cat: "seed", trap: false, tip: "唯一特例：果肉" },
   { id: 5, file: "5.川烏.JPG", name: "烏頭", aliases: ["川烏", "烏頭(川烏)", "川烏(烏頭)"], core: "主根", full: "乾燥主根(母根)", cat: "root", trap: true, tip: "附件三表列為「烏頭」，粗體部位為「主根」（附子才是子根）" },
@@ -461,7 +474,7 @@ const HERBS = [
   { id: 37, file: "37.槐花.JPG", name: "槐花", aliases: ["槐米"], core: "花", full: "乾燥花", cat: "special", trap: false, tip: "唯一特例：花" },
   { id: 38, file: "38.廣藿香.JPG", name: "廣藿香", aliases: ["藿香"], core: "地上部分", full: "乾燥地上部分", cat: "special", trap: false, tip: "地上部分共 4 味：青蒿、茵陳、廣藿香、瞿麥" },
   { id: 39, file: "39.穀芽.JPG", name: "穀芽", aliases: ["稻芽"], core: "加工發芽之乾燥品", full: "加工發芽之乾燥品", cat: "special", trap: false, tip: "整句皆為粗體：加工發芽之乾燥品" },
-  { id: 40, file: "40.澤瀉.JPG", name: "澤瀉", aliases: [], core: "塊莖", full: "乾燥塊莖", cat: "root", trap: true, tip: "塊莖只有三個：三稜、莪朮(錯！莪朮是根莖，塊莖是三稜、澤瀉)" },
+  { id: 40, file: "40.澤瀉.JPG", name: "澤瀉", aliases: [], core: "塊莖", full: "乾燥塊莖", cat: "root", trap: true, tip: "塊莖只有兩個：三稜、澤瀉（注意莪朮是根莖！）" },
   { id: 41, file: "41.燈心草.JPG", name: "燈心草", aliases: ["燈芯草"], core: "莖髓", full: "乾燥莖髓", cat: "special", trap: false, tip: "唯一特例：莖髓" },
   { id: 42, file: "42.獨活.JPG", name: "獨活", aliases: [], core: "根", full: "乾燥根", cat: "root", trap: false, tip: "純根類（對比：羌活是根莖及根，獨活是純根）" },
   { id: 43, file: "43.薏苡仁.JPG", name: "薏苡仁", aliases: ["薏仁"], core: "種仁", full: "乾燥成熟種仁", cat: "seed", trap: true, tip: "唯一特例：種仁（去種皮）" },
@@ -473,14 +486,13 @@ const HERBS = [
   { id: 49, file: "49.龜板.JPG", name: "龜板", aliases: ["龜甲"], core: "腹甲", full: "腹甲", cat: "special", trap: false, tip: "動物藥特例：腹甲" },
   { id: 50, file: "50.神麴.JPG", name: "神麴", aliases: ["神曲", "六神麴"], core: "麴劑", full: "麴劑", cat: "special", trap: false, tip: "發酵製劑特例：麴劑" }
 ];
-// Fix tip on #40
-HERBS[39].tip = "塊莖只有兩個：三稜、澤瀉（注意莪朮是根莖！）";
 
 const ALL_CORES = [...new Set(HERBS.map(h => h.core))];
 
 let state = {
   mode: "fill",
   filter: "all",
+  isShuffled: true,
   deck: [],
   idx: 0,
   right: 0,
@@ -514,9 +526,11 @@ function getFilteredHerbs() {
   });
 }
 
-function rebuildDeck() {
+function rebuildDeck(shouldShuffle = state.isShuffled) {
+  state.isShuffled = shouldShuffle;
   const list = getFilteredHerbs();
-  state.deck = shuffle(list.length ? list : HERBS);
+  const base = list.length ? list : HERBS;
+  state.deck = shouldShuffle ? shuffle(base) : [...base].sort((a, b) => a.id - b.id);
   state.idx = 0;
   state.right = 0;
   state.wrong = 0;
@@ -832,7 +846,8 @@ document.querySelectorAll(".tab-btn").forEach(btn => {
       document.getElementById("quizView").classList.add("hidden");
       document.getElementById("statsBar").classList.add("hidden");
       document.getElementById("refView").classList.remove("hidden");
-      renderRefGrid();
+      // 切換到大圖對照表時，自動恢復 1->50 順序（仍可按隨機洗牌打亂）
+      rebuildDeck(false);
     } else {
       document.getElementById("refView").classList.add("hidden");
       document.getElementById("quizView").classList.remove("hidden");
@@ -847,18 +862,19 @@ document.querySelectorAll(".chip").forEach(chip => {
     document.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
     chip.classList.add("active");
     state.filter = chip.dataset.filter;
-    rebuildDeck();
+    rebuildDeck(state.mode !== "ref");
   };
 });
 
-document.getElementById("shuffleBtn").onclick = rebuildDeck;
+document.getElementById("sortBtn").onclick = () => rebuildDeck(false);
+document.getElementById("shuffleBtn").onclick = () => rebuildDeck(true);
 document.getElementById("submitBtn").onclick = checkFillAnswer;
 document.getElementById("flipBtn").onclick = () => {
   document.getElementById("flashArea").classList.toggle("flipped");
 };
 document.getElementById("nextBtn").onclick = () => {
   if (state.idx >= state.deck.length) {
-    rebuildDeck();
+    rebuildDeck(state.isShuffled);
   } else {
     state.idx++;
     renderQuestion();
@@ -895,7 +911,7 @@ document.getElementById("toggleFitBtn").onclick = () => {
 
 // Init
 saveWrong();
-rebuildDeck();
+rebuildDeck(true);
 </script>
 </body>
 </html>
