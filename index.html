@@ -1,0 +1,1641 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>115-1 藥學導論 50種中藥材 隨機打散測驗</title>
+  <style>
+    :root {
+      --bg: #f5f6f4;
+      --surface: #ffffff;
+      --surface-alt: #f8faf8;
+      --border: #e2e8f0;
+      --text-main: #1e293b;
+      --text-sub: #64748b;
+      --herb-50: #f2f7f3;
+      --herb-100: #e1ede4;
+      --herb-200: #c3dcc9;
+      --herb-600: #2f6b47;
+      --herb-700: #245437;
+      --herb-900: #163322;
+      --emerald-50: #ecfdf5;
+      --emerald-500: #10b981;
+      --emerald-700: #047857;
+      --rose-50: #fff1f2;
+      --rose-500: #f43f5e;
+      --rose-700: #be123c;
+      --amber-50: #fffbeb;
+      --amber-200: #fde68a;
+      --amber-800: #92400e;
+      --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+      --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.5;
+    }
+
+    /* 頂部導覽列 */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .container {
+      max-width: 1024px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    .header-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-top: 12px;
+      padding-bottom: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
+      background: var(--herb-600);
+      color: #fff;
+      font-weight: 900;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.25;
+    }
+
+    .brand-sub {
+      font-size: 12px;
+      color: var(--text-sub);
+    }
+
+    .status-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .img-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      background: var(--herb-50);
+      color: var(--herb-700);
+      border: 1px solid var(--herb-200);
+    }
+
+    .img-badge.warn {
+      background: var(--amber-50);
+      color: var(--amber-800);
+      border-color: var(--amber-200);
+    }
+
+    .backup-upload-label {
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-sub);
+      padding: 6px 10px;
+      border-radius: 8px;
+      border: 1px dashed var(--border);
+      background: var(--surface);
+      transition: all 0.15s;
+    }
+
+    .backup-upload-label:hover {
+      color: var(--herb-700);
+      border-color: var(--herb-600);
+      background: var(--herb-50);
+    }
+
+    .hidden { display: none !important; }
+
+    /* 主內容區 */
+    main {
+      flex: 1;
+      padding-top: 18px;
+      padding-bottom: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* 控制面板 */
+    .control-panel {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .control-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .mode-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      background: #f1f5f9;
+      padding: 4px;
+      border-radius: 12px;
+      gap: 4px;
+    }
+
+    .mode-tab {
+      border: none;
+      background: transparent;
+      padding: 8px 13px;
+      border-radius: 9px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-sub);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .mode-tab:hover { color: var(--text-main); }
+
+    .mode-tab.active {
+      background: var(--surface);
+      color: var(--herb-700);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    .btn-shuffle {
+      border: none;
+      background: #0f172a;
+      color: #fff;
+      padding: 9px 16px;
+      border-radius: 11px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.1s, background 0.15s;
+    }
+
+    .btn-shuffle:hover { background: #1e293b; }
+    .btn-shuffle:active { transform: scale(0.97); }
+
+    .control-bottom {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #f1f5f9;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .filter-btn {
+      border: none;
+      padding: 6px 12px;
+      border-radius: 9px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      background: #f1f5f9;
+      color: #475569;
+      transition: all 0.15s;
+    }
+
+    .filter-btn:hover { background: #e2e8f0; }
+    .filter-btn.active {
+      background: var(--herb-600);
+      color: #fff;
+    }
+
+    .stats-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-sub);
+    }
+
+    .stats-bar strong { color: var(--text-main); }
+    .text-ok { color: var(--emerald-700) !important; }
+    .text-err { color: var(--rose-700) !important; }
+
+    .progress-track {
+      width: 100%;
+      height: 7px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--herb-600);
+      transition: width 0.25s ease;
+    }
+
+    /* 測驗舞台 */
+    .quiz-card {
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .quiz-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .tag-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .tag-green { background: var(--herb-100); color: var(--herb-700); }
+    .tag-amber { background: #fef3c7; color: var(--amber-800); }
+
+    .mini-btn {
+      border: 1px solid var(--border);
+      background: #f8fafc;
+      color: #475569;
+      padding: 5px 11px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .mini-btn:hover { background: #f1f5f9; }
+    .mini-btn.bookmarked {
+      background: var(--rose-50);
+      border-color: #fecdd3;
+      color: var(--rose-700);
+    }
+    .mini-btn.hint-btn {
+      background: var(--amber-50);
+      border-color: var(--amber-200);
+      color: var(--amber-800);
+    }
+
+    /* 題目主體雙欄排版 */
+    .quiz-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .quiz-grid { grid-template-columns: 1fr; }
+      .quiz-card { padding: 16px; }
+    }
+
+    /* 圖片檢視框 */
+    .img-frame {
+      position: relative;
+      width: 100%;
+      height: 280px;
+      background: #111827;
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      cursor: zoom-in;
+    }
+
+    @media (max-width: 640px) {
+      .img-frame { height: 230px; }
+    }
+
+    .img-frame img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .img-overlay-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(0, 0, 0, 0.65);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 9px;
+      border-radius: 7px;
+      pointer-events: none;
+    }
+
+    .img-zoom-hint {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: rgba(0, 0, 0, 0.6);
+      color: #f8fafc;
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      pointer-events: none;
+    }
+
+    .img-fallback {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--herb-50), #eef2f6);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      text-align: center;
+      cursor: default;
+    }
+
+    /* 填充題表單 */
+    .fill-form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .field-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 5px;
+    }
+
+    .field-group label span {
+      font-weight: 400;
+      color: var(--text-sub);
+      font-size: 12px;
+    }
+
+    .text-input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 2px solid #cbd5e1;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-main);
+      background: var(--surface);
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .text-input:focus {
+      outline: none;
+      border-color: var(--herb-600);
+    }
+
+    .text-input.correct {
+      border-color: var(--emerald-500);
+      background: var(--emerald-50);
+      color: #065f46;
+    }
+
+    .text-input.wrong {
+      border-color: var(--rose-500);
+      background: var(--rose-50);
+      color: #9f1239;
+    }
+
+    .hint-callout {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1e40af;
+      padding: 10px 12px;
+      border-radius: 11px;
+      font-size: 13px;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      flex: 1;
+      border: none;
+      background: var(--herb-600);
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+    }
+
+    .btn-primary:hover { background: var(--herb-700); }
+    .btn-primary:active { transform: scale(0.98); }
+
+    .btn-secondary {
+      border: 1px solid var(--border);
+      background: #f1f5f9;
+      color: #334155;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-secondary:hover { background: #e2e8f0; }
+
+    /* 四選一選項 */
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    @media (max-width: 640px) {
+      .options-grid { grid-template-columns: 1fr; }
+    }
+
+    .opt-btn {
+      text-align: left;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 2px solid var(--border);
+      background: var(--surface);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15px;
+      transition: all 0.15s;
+    }
+
+    .opt-btn:hover:not(:disabled) {
+      border-color: var(--herb-600);
+      background: var(--herb-50);
+    }
+
+    .opt-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: #f1f5f9;
+      color: #334155;
+      font-size: 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .opt-btn.opt-correct {
+      border-color: var(--emerald-500);
+      background: var(--emerald-50);
+    }
+    .opt-btn.opt-correct .opt-num {
+      background: var(--emerald-500);
+      color: #fff;
+    }
+
+    .opt-btn.opt-wrong {
+      border-color: var(--rose-500);
+      background: var(--rose-50);
+    }
+    .opt-btn.opt-wrong .opt-num {
+      background: var(--rose-500);
+      color: #fff;
+    }
+
+    .opt-btn.opt-dim { opacity: 0.55; }
+
+    /* 回饋解析區 */
+    .feedback-box {
+      border-radius: 16px;
+      padding: 16px 18px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .feedback-box.ok {
+      background: var(--emerald-50);
+      border: 1px solid #a7f3d0;
+    }
+
+    .feedback-box.err {
+      background: var(--rose-50);
+      border: 1px solid #fecdd3;
+    }
+
+    .btn-next {
+      border: none;
+      background: #0f172a;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn-next:hover { background: #1e293b; }
+
+    /* 閃卡樣式 */
+    .flash-wrap {
+      max-width: 580px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .flashcard {
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    .flash-inner {
+      position: relative;
+      width: 100%;
+      min-height: 400px;
+      transform-style: preserve-3d;
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .flash-inner.flipped { transform: rotateY(180deg); }
+
+    .flash-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 22px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .flash-front {
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+
+    .flash-back {
+      background: var(--herb-900);
+      color: #fff;
+      transform: rotateY(180deg);
+    }
+
+    /* 總表網格 */
+    .sheet-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .sheet-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      border-radius: 12px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+    }
+
+    .sheet-thumb {
+      width: 54px;
+      height: 54px;
+      border-radius: 9px;
+      object-fit: cover;
+      background: #e2e8f0;
+      flex-shrink: 0;
+    }
+
+    /* 圖片放大燈箱 */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.88);
+      z-index: 60;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      cursor: zoom-out;
+    }
+
+    .lightbox img {
+      max-width: 95vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+
+    /* 底部提示與 Toast */
+    footer {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--text-sub);
+      padding-top: 6px;
+    }
+
+    kbd {
+      background: #fff;
+      border: 1px solid #cbd5e1;
+      border-radius: 5px;
+      padding: 1px 6px;
+      font-family: monospace;
+      font-size: 11px;
+      color: #334155;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0f172a;
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: var(--shadow-md);
+      z-index: 70;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+
+    .toast.show { opacity: 1; }
+  </style>
+</head>
+<body>
+
+  <!-- 頂部導覽列 -->
+  <header>
+    <div class="container header-inner">
+      <div class="brand">
+        <div class="brand-icon">藥</div>
+        <div>
+          <div class="brand-title">115-1 藥學導論 50種中藥材</div>
+          <div class="brand-sub">高醫藥學跑台模擬 • 自動讀取同資料夾圖片 • 隨機打散測驗</div>
+        </div>
+      </div>
+
+      <div class="status-group">
+        <span id="autoImgBadge" class="img-badge">🔍 正在偵測同資料夾圖片...</span>
+        <label for="folderInput" class="backup-upload-label" title="若將 HTML 放在其他位置，可手動選取圖片資料夾">
+          📁 手動指定資料夾
+        </label>
+        <input id="folderInput" type="file" webkitdirectory directory multiple accept="image/*" class="hidden" />
+      </div>
+    </div>
+  </header>
+
+  <!-- 主要測驗區 -->
+  <main class="container">
+    <!-- 控制面板 -->
+    <section class="card control-panel">
+      <div class="control-top">
+        <div class="mode-tabs">
+          <button onclick="setMode('fill')" id="tab-fill" class="mode-tab active">✍️ 填充題（看圖填名字＋部位）</button>
+          <button onclick="setMode('identify')" id="tab-identify" class="mode-tab">🎯 選擇題（看圖選名稱＋部位）</button>
+          <button onclick="setMode('part')" id="tab-part" class="mode-tab">🧬 選擇題（給藥名選藥用部位）</button>
+          <button onclick="setMode('flashcard')" id="tab-flashcard" class="mode-tab">🃏 閃卡速刷</button>
+        </div>
+
+        <button onclick="reshuffleDeck()" class="btn-shuffle">
+          🔄 重新隨機洗牌
+        </button>
+      </div>
+
+      <div class="control-bottom">
+        <div class="filter-group">
+          <span style="font-size:12px; font-weight:700; color:#64748b;">題庫：</span>
+          <button onclick="setFilter('all')" id="filter-all" class="filter-btn active">全部 50 題</button>
+          <button onclick="setFilter('trap')" id="filter-trap" class="filter-btn">🔥 易混淆陷阱與根莖大魔王</button>
+          <button onclick="setFilter('wrong')" id="filter-wrong" class="filter-btn">📌 錯題本 (<span id="wrongCountBadge">0</span>)</button>
+        </div>
+
+        <div class="stats-bar">
+          <span>進度：<strong id="progressText">1 / 50</strong></span>
+          <span>答對：<strong id="scoreCorrect" class="text-ok">0</strong></span>
+          <span>答錯：<strong id="scoreWrong" class="text-err">0</strong></span>
+        </div>
+      </div>
+
+      <div class="progress-track">
+        <div id="progressBar" class="progress-fill" style="width: 2%;"></div>
+      </div>
+    </section>
+
+    <!-- 測驗舞台 -->
+    <section id="quizStage"></section>
+
+    <!-- 頁尾快捷鍵說明與一覽表按鈕 -->
+    <footer>
+      <div>
+        ⌨️ 快捷鍵：<kbd>Enter</kbd> 填充切換 / 送出 / 下一題 ・ <kbd>1</kbd>~<kbd>4</kbd> 選擇題 ・ <kbd>Space</kbd> 閃卡翻面
+      </div>
+      <button onclick="toggleCheatSheet()" style="border:none; background:none; color:var(--herb-700); font-weight:800; cursor:pointer; font-size:13px;">
+        📖 展開 / 收合 50味藥圖文總表
+      </button>
+    </footer>
+
+    <!-- 可摺疊的 50 味藥總表 -->
+    <section id="cheatSheetPanel" class="card hidden" style="padding: 20px;">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+        <h3 style="font-size:16px; font-weight:800;">115-1 藥學導論 50種中藥材完整對照表</h3>
+        <button onclick="toggleCheatSheet()" class="mini-btn">收合</button>
+      </div>
+      <div id="cheatSheetGrid" class="sheet-grid"></div>
+    </section>
+  </main>
+
+  <!-- 點擊圖片放大檢視燈箱 -->
+  <div id="lightbox" class="lightbox hidden" onclick="closeLightbox()">
+    <img id="lightboxImg" src="" alt="放大檢視藥材" />
+  </div>
+
+  <!-- 輕量提示 Toast -->
+  <div id="toast" class="toast"></div>
+
+  <script>
+    /**
+     * 完整 50 種中藥材資料庫
+     */
+    const HERBS_DATA = [
+      { id: 1, name: "三七", aliases: ["三七"], part: "乾燥根及根莖", file: "1.三七.JPG", category: "根與根莖家族", isTrap: true, hint: "雙棲類（根在前）：三七、山豆根、防風" },
+      { id: 2, name: "三稜", aliases: ["三稜", "三棱"], part: "乾燥塊莖", file: "2.三稜.JPG", category: "根與根莖家族", isTrap: true, hint: "膨大塊莖（3個）：三稜、莪朮、澤瀉" },
+      { id: 3, name: "山豆根", aliases: ["山豆根"], part: "乾燥根及根莖", file: "3.山豆根.JPG", category: "根與根莖家族", isTrap: true, hint: "陷阱：名字有「根」卻是「乾燥根及根莖」" },
+      { id: 4, name: "山茱萸", aliases: ["山茱萸"], part: "乾燥成熟果肉", file: "4.山茱萸.JPG", category: "唯一特例", isTrap: false, hint: "唯一特例：乾燥成熟果肉" },
+      { id: 5, name: "川烏", aliases: ["川烏", "烏頭", "川烏（烏頭）", "川烏(烏頭)", "製川烏"], part: "乾燥主根（母根）", file: "5.川烏.JPG", category: "唯一特例", isTrap: true, hint: "表格列為「烏頭」，唯一特例：乾燥主根（母根）" },
+      { id: 6, name: "五味子", aliases: ["五味子"], part: "乾燥成熟果實", file: "6.五味子.JPG", category: "唯一特例", isTrap: false, hint: "唯一特例：乾燥成熟果實" },
+      { id: 7, name: "木香", aliases: ["木香"], part: "乾燥根", file: "7.木香.JPG", category: "根與根莖家族", isTrap: true, hint: "預設大宗：乾燥根" },
+      { id: 8, name: "北板藍根", aliases: ["北板藍根", "板藍根"], part: "乾燥根", file: "8.北板藍根.JPG", category: "根與根莖家族", isTrap: false, hint: "預設大宗：乾燥根" },
+      { id: 9, name: "白朮", aliases: ["白朮", "白术"], part: "乾燥根莖", file: "9.白朮.JPG", category: "根與根莖家族", isTrap: true, hint: "純乾燥根莖（4個）：白朮、白茅根、黃精、蘆根" },
+      { id: 10, name: "白扁豆", aliases: ["白扁豆"], part: "乾燥成熟種子", file: "10.白扁豆.JPG", category: "種子與地上部分", isTrap: false, hint: "種子大宗（5個）：白扁豆、車前子、桃仁、菟絲子、萊菔子" },
+      { id: 11, name: "白茅根", aliases: ["白茅根"], part: "乾燥根莖", file: "11.白茅根.JPG", category: "根與根莖家族", isTrap: true, hint: "陷阱：名字有「根」卻是「乾燥根莖」" },
+      { id: 12, name: "百部", aliases: ["百部"], part: "乾燥塊根", file: "12.百部.JPG", category: "根與根莖家族", isTrap: true, hint: "膨大塊根（2個）：百部、麥門冬" },
+      { id: 13, name: "沒藥", aliases: ["沒藥"], part: "樹幹皮部滲出之油膠樹脂", file: "13.沒藥.JPG", category: "唯一特例", isTrap: false, hint: "唯一特例：樹脂類" },
+      { id: 14, name: "沙苑蒺藜", aliases: ["沙苑蒺藜", "沙苑子"], part: "乾燥種子", file: "14.沙苑蒺藜.JPG", category: "種子與地上部分", isTrap: true, hint: "種子特例：少「成熟」二字，僅「乾燥種子」" },
+      { id: 15, name: "車前子", aliases: ["車前子"], part: "乾燥成熟種子", file: "15.車前子.JPG", category: "種子與地上部分", isTrap: false, hint: "種子大宗（5個）：白扁豆、車前子、桃仁、菟絲子、萊菔子" },
+      { id: 16, name: "防己", aliases: ["防己", "粉防己"], part: "乾燥根", file: "16.防己.JPG", category: "根與根莖家族", isTrap: true, hint: "預設大宗：乾燥根" },
+      { id: 17, name: "防風", aliases: ["防風"], part: "乾燥根及根莖", file: "17.防風.JPG", category: "根與根莖家族", isTrap: true, hint: "雙棲類（根在前）：三七、山豆根、防風" },
+      { id: 18, name: "羌活", aliases: ["羌活"], part: "乾燥根莖及根", file: "18.羌活.JPG", category: "根與根莖家族", isTrap: true, hint: "雙棲類（根莖在前）：羌活、前胡" },
+      { id: 19, name: "前胡", aliases: ["前胡"], part: "乾燥根莖及根", file: "19.前胡.JPG", category: "根與根莖家族", isTrap: true, hint: "雙棲類（根莖在前）：羌活、前胡" },
+      { id: 20, name: "青蒿", aliases: ["青蒿"], part: "乾燥地上部分", file: "20.青蒿.JPG", category: "種子與地上部分", isTrap: false, hint: "地上部分（4個）：青蒿、茵陳、廣藿香、瞿麥" },
+      { id: 21, name: "枳實", aliases: ["枳實"], part: "乾燥幼果", file: "21.枳實.JPG", category: "唯一特例", isTrap: false, hint: "唯一特例：乾燥幼果" },
+      { id: 22, name: "苦參", aliases: ["苦參"], part: "乾燥根", file: "22.苦參.JPG", category: "根與根莖家族", isTrap: true, hint: "預設大宗：乾燥根" },
+      { id: 23, name: "栝樓根", aliases: ["栝樓根", "瓜蔞根", "天花粉"], part: "乾燥根", file: "23.栝樓根.JPG", category: "根與根莖家族", isTrap: false, hint: "預設大宗：乾燥根（別名天花粉）" },
+      { id: 24, name: "桃仁", aliases: ["桃仁"], part: "乾燥成熟種子", file: "24.桃仁.JPG", category: "種子與地上部分", isTrap: true, hint: "種子大宗（5個）：白扁豆、車前子、桃仁、菟絲子、萊菔子" },
+      { id: 25, name: "桑白皮", aliases: ["桑白皮"], part: "除去栓皮層乾燥根皮", file: "25.桑白皮.JPG", category: "唯一特例", isTrap: false, hint: "唯一特例：除去栓皮層乾燥根皮" },
+      { id: 26, name: "浙貝母", aliases: ["浙貝母"], part: "乾燥鱗莖", file: "26.浙貝母.JPG", category: "唯一特例", isTrap: false, hint: "唯一特例：乾燥鱗莖" },
+      { id: 27, name: "浮小麥", aliases: ["浮小麥"], part: "成熟果實中輕浮乾癟乾燥穎果", file: "27.浮小麥.JPG", category: "唯一特例", isTrap: false, hint: "唯一特例：成熟果實中輕浮乾癟乾燥穎果" },
+      { id: 28, name: "茵陳", aliases: ["茵陳", "茵陳蒿"], part: "乾燥地上部分", file: "28.茵陳.JPG", category: "種子與地上部分", isTrap: false, hint: "地上部分（4個）：青蒿、茵陳、廣藿香、瞿麥" },
+      { id: 29, name: "細辛", aliases: ["細辛"], part: "乾燥根", file: "29.細辛.JPG", category: "根與根莖家族", isTrap: true, hint: "考點預設：乾燥根（雖帶根莖但表格定為乾燥根）" },
+      { id: 30, name: "莪朮", aliases: ["莪朮", "莪術"], part: "乾燥根莖", file: "30.莪朮.JPG", category: "根與根莖家族", isTrap: true, hint: "純乾燥根莖（注意：本表2號三稜為乾燥塊莖，30號莪朮為乾燥根莖！）" },
+      { id: 31, name: "麥門冬", aliases: ["麥門冬", "麥冬"], part: "乾燥塊根", file: "31.麥門冬.JPG", category: "根與根莖家族", isTrap: true, hint: "膨大塊根（2個）：百部、麥門冬" },
+      { id: 32, name: "番瀉葉", aliases: ["番瀉葉"], part: "乾燥小葉", file: "32.番瀉葉.JPG", category: "唯一特例", isTrap: false, hint: "唯一特例：乾燥小葉" },
+      { id: 33, name: "菟絲子", aliases: ["菟絲子", "兔絲子"], part: "乾燥成熟種子", file: "33.菟絲子.JPG", category: "種子與地上部分", isTrap: false, hint: "種子大宗（5個）：白扁豆、車前子、桃仁、菟絲子、萊菔子" },
+      { id: 34, name: "萊菔子", aliases: ["萊菔子"], part: "乾燥成熟種子", file: "34.萊菔子.JPG", category: "種子與地上部分", isTrap: false, hint: "種子大宗（5個）：白扁豆、車前子、桃仁、菟絲子、萊菔子" },
+      { id: 35, name: "黃精", aliases: ["黃精"], part: "乾燥根莖", file: "35.黃精.JPG", category: "根與根莖家族", isTrap: true, hint: "純乾燥根莖：白朮、白茅根、黃精、蘆根" },
+      { id: 36, name: "葛根", aliases: ["葛根"], part: "乾燥根", file: "36.葛根.JPG", category: "根與根莖家族", isTrap: false, hint: "預設大宗：乾燥根" },
+      { id: 37, name: "槐花", aliases: ["槐花"], part: "乾燥花", file: "37.槐花.JPG", category: "唯一特例", isTrap: false, hint: "唯一特例：乾燥花" },
+      { id: 38, name: "廣藿香", aliases: ["廣藿香", "藿香"], part: "乾燥地上部分", file: "38.廣藿香.JPG", category: "種子與地上部分", isTrap: false, hint: "地上部分（4個）：青蒿、茵陳、廣藿香、瞿麥" },
+      { id: 39, name: "穀芽", aliases: ["穀芽", "稻芽"], part: "加工發芽之乾燥品", file: "39.穀芽.JPG", category: "唯一特例", isTrap: false, hint: "唯一特例：加工發芽之乾燥品" },
+      { id: 40, name: "澤瀉", aliases: ["澤瀉"], part: "乾燥塊莖", file: "40.澤瀉.JPG", category: "根與根莖家族", isTrap: true, hint: "膨大塊莖：三稜、澤瀉（注意30號莪朮為乾燥根莖）" },
+      { id: 41, name: "燈心草", aliases: ["燈心草", "燈芯草"], part: "乾燥莖髓", file: "41.燈心草.JPG", category: "唯一特例", isTrap: false, hint: "唯一特例：乾燥莖髓" },
+      { id: 42, name: "獨活", aliases: ["獨活"], part: "乾燥根", file: "42.獨活.JPG", category: "根與根莖家族", isTrap: true, hint: "預設大宗：乾燥根" },
+      { id: 43, name: "薏苡仁", aliases: ["薏苡仁"], part: "乾燥成熟種仁", file: "43.薏苡仁.JPG", category: "種子與地上部分", isTrap: true, hint: "種子特例：去種皮，故為「乾燥成熟種仁」" },
+      { id: 44, name: "瞿麥", aliases: ["瞿麥"], part: "乾燥地上部分", file: "44.瞿麥.JPG", category: "種子與地上部分", isTrap: false, hint: "地上部分（4個）：青蒿、茵陳、廣藿香、瞿麥" },
+      { id: 45, name: "鎖陽", aliases: ["鎖陽"], part: "乾燥肉質莖", file: "45.鎖陽.JPG", category: "唯一特例", isTrap: false, hint: "唯一特例：乾燥肉質莖" },
+      { id: 46, name: "蘆根", aliases: ["蘆根"], part: "乾燥根莖", file: "46.蘆根.JPG", category: "根與根莖家族", isTrap: true, hint: "陷阱：名字有「根」卻是「乾燥根莖」" },
+      { id: 47, name: "蘆薈", aliases: ["蘆薈"], part: "葉的汁液濃縮乾燥物", file: "47.蘆薈.JPG", category: "唯一特例", isTrap: false, hint: "唯一特例：葉的汁液濃縮乾燥物" },
+      { id: 48, name: "續斷", aliases: ["續斷", "川續斷"], part: "乾燥根", file: "48.續斷.JPG", category: "根與根莖家族", isTrap: true, hint: "預設大宗：乾燥根" },
+      { id: 49, name: "龜板", aliases: ["龜板", "龜甲"], part: "腹甲", file: "49.龜板.JPG", category: "唯一特例", isTrap: false, hint: "唯一特例：腹甲" },
+      { id: 50, name: "神麴", aliases: ["神麴", "神曲", "六神麴"], part: "麴劑", file: "50.神麴.JPG", category: "唯一特例", isTrap: false, hint: "唯一特例：麴劑" }
+    ];
+
+    // 狀態管理
+    let resolvedImageUrls = {}; // herb.id -> 確定可載入的圖片路徑或 ObjectURL
+    let currentMode = 'fill';   // 'fill' | 'identify' | 'part' | 'flashcard'
+    let currentFilter = 'all';  // 'all' | 'trap' | 'wrong'
+    let deck = [];
+    let currentIndex = 0;
+    let scoreCorrect = 0;
+    let scoreWrong = 0;
+    let answeredCurrent = false;
+    let currentOptions = [];
+    let isCardFlipped = false;
+    let fillHintShown = false;
+    let wrongIds = new Set(JSON.parse(localStorage.getItem('tcm_kmu_wrong_ids') || '[]'));
+
+    /**
+     * 取得某味藥的所有候選相對路徑（同時相容放在照片資料夾內、或放在解壓縮外層資料夾旁）
+     */
+    function getCandidatePaths(herb) {
+      const baseName = `${herb.id}.${herb.name}`;
+      return [
+        `${baseName}.JPG`,
+        `${baseName}.jpg`,
+        `115-1藥學導論 50種中藥材照片/${baseName}.JPG`,
+        `115-1藥學導論 50種中藥材照片/${baseName}.jpg`
+      ];
+    }
+
+    /**
+     * 啟動時背景預載檢測同資料夾的 50 張圖片
+     */
+    function autoDetectLocalImages() {
+      let checked = 0;
+      let loadedCount = 0;
+      const badge = document.getElementById('autoImgBadge');
+
+      HERBS_DATA.forEach(herb => {
+        const candidates = getCandidatePaths(herb);
+        let idx = 0;
+        const tester = new Image();
+
+        tester.onload = () => {
+          resolvedImageUrls[herb.id] = candidates[idx];
+          loadedCount++;
+          checked++;
+          updateAutoBadge(loadedCount, checked);
+          // 若當前畫面正好顯示這題且剛載入成功，立即刷新圖片
+          if (deck[currentIndex] && deck[currentIndex].id === herb.id) {
+            renderCurrentQuestion();
+          }
+        };
+
+        tester.onerror = () => {
+          idx++;
+          if (idx < candidates.length) {
+            tester.src = candidates[idx];
+          } else {
+            checked++;
+            updateAutoBadge(loadedCount, checked);
+          }
+        };
+
+        tester.src = candidates[0];
+      });
+
+      function updateAutoBadge(loaded, totalChecked) {
+        if (loaded > 0) {
+          badge.className = "img-badge";
+          badge.textContent = `✅ 已自動連結同資料夾圖片 (${loaded}/50)`;
+        } else if (totalChecked === HERBS_DATA.length) {
+          badge.className = "img-badge warn";
+          badge.textContent = `⚠️ 同資料夾未找到圖片（請將本檔放進照片資料夾內，或點右側手動指定）`;
+        }
+      }
+    }
+
+    /**
+     * 圖片元素載入失敗時的鏈式容錯切換（用於即時渲染的 <img>）
+     */
+    function handleImgFallback(imgEl, herbId) {
+      const herb = HERBS_DATA.find(h => h.id === herbId);
+      if (!herb) return;
+      const candidates = getCandidatePaths(herb);
+      const step = parseInt(imgEl.dataset.step || '0', 10) + 1;
+
+      if (step < candidates.length) {
+        imgEl.dataset.step = String(step);
+        imgEl.src = candidates[step];
+      } else {
+        // 所有相對路徑皆找不到圖片，切換為文字線索佔位卡
+        const frame = imgEl.parentElement;
+        if (frame) {
+          frame.className = "img-frame";
+          frame.onclick = null;
+          frame.innerHTML = `
+            <div class="img-fallback">
+              <div style="font-size:32px; margin-bottom:6px;">🌿</div>
+              <div style="font-size:13px; font-weight:800; color:var(--herb-700);">找不到同資料夾圖片：${herb.file}</div>
+              <div style="font-size:12px; color:#64748b; margin-top:4px;">請確認本 HTML 檔與 <strong>1.三七.JPG ~ 50.神麴.JPG</strong> 位於同一資料夾</div>
+              <div style="font-size:12px; color:var(--herb-700); margin-top:8px; background:#fff; padding:4px 10px; border-radius:8px; border:1px solid var(--herb-200);">
+                分類線索：<strong>${herb.category}</strong>
+              </div>
+            </div>
+          `;
+        }
+      }
+    }
+
+    // 備用：手動選取本機圖片資料夾
+    document.getElementById('folderInput').addEventListener('change', function(e) {
+      const files = Array.from(e.target.files);
+      if (!files.length) return;
+      let matched = 0;
+
+      files.forEach(file => {
+        if (!file.type.startsWith('image/')) return;
+        const numMatch = file.name.trim().match(/^(\d+)\./);
+        if (numMatch) {
+          const idNum = parseInt(numMatch[1], 10);
+          if (idNum >= 1 && idNum <= 50) {
+            resolvedImageUrls[idNum] = URL.createObjectURL(file);
+            matched++;
+          }
+        }
+      });
+
+      if (matched > 0) {
+        const badge = document.getElementById('autoImgBadge');
+        badge.className = "img-badge";
+        badge.textContent = `✅ 已手動載入圖片 (${matched}/50)`;
+        showToast(`成功載入 ${matched} 張藥材圖片！`);
+        renderCurrentQuestion();
+        renderCheatSheet();
+      } else {
+        showToast('未偵測到 1.三七.JPG ~ 50.神麴.JPG 編號圖片');
+      }
+    });
+
+    // 燈箱放大檢視圖片
+    function openLightbox(src) {
+      if (!src) return;
+      const lb = document.getElementById('lightbox');
+      document.getElementById('lightboxImg').src = src;
+      lb.classList.remove('hidden');
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.add('hidden');
+    }
+
+    // Fisher-Yates 均勻隨機洗牌
+    function shuffleArray(array) {
+      const arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(window.toastTimer);
+      window.toastTimer = setTimeout(() => toast.classList.remove('show'), 2300);
+    }
+
+    function saveWrongIds() {
+      localStorage.setItem('tcm_kmu_wrong_ids', JSON.stringify([...wrongIds]));
+      document.getElementById('wrongCountBadge').textContent = wrongIds.size;
+    }
+
+    function setMode(mode) {
+      currentMode = mode;
+      document.querySelectorAll('.mode-tab').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(`tab-${mode}`).classList.add('active');
+      reshuffleDeck(false);
+    }
+
+    function setFilter(filter) {
+      if (filter === 'wrong' && wrongIds.size === 0) {
+        showToast('目前錯題本是空的！答錯或手動加入的題目會自動收錄在這裡。');
+        return;
+      }
+      currentFilter = filter;
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(`filter-${filter}`).classList.add('active');
+      reshuffleDeck(false);
+    }
+
+    function reshuffleDeck(notify = true) {
+      let pool = [...HERBS_DATA];
+      if (currentFilter === 'trap') {
+        pool = pool.filter(h => h.isTrap);
+      } else if (currentFilter === 'wrong') {
+        pool = pool.filter(h => wrongIds.has(h.id));
+        if (pool.length === 0) {
+          setFilter('all');
+          return;
+        }
+      }
+
+      deck = shuffleArray(pool);
+      currentIndex = 0;
+      scoreCorrect = 0;
+      scoreWrong = 0;
+      answeredCurrent = false;
+      isCardFlipped = false;
+      fillHintShown = false;
+      updateStatsUI();
+      renderCurrentQuestion();
+      if (notify) showToast(`已重新隨機打散 ${deck.length} 題！`);
+    }
+
+    function updateStatsUI() {
+      const total = deck.length;
+      const displayIdx = Math.min(currentIndex + 1, total);
+      document.getElementById('progressText').textContent = `${displayIdx} / ${total}`;
+      document.getElementById('scoreCorrect').textContent = scoreCorrect;
+      document.getElementById('scoreWrong').textContent = scoreWrong;
+      document.getElementById('wrongCountBadge').textContent = wrongIds.size;
+      const pct = total > 0 ? Math.round((displayIdx / total) * 100) : 0;
+      document.getElementById('progressBar').style.width = `${pct}%`;
+    }
+
+    // 渲染圖片容器（直接載入同資料夾相對路徑圖片）
+    function renderImageBox(herb, blindMode = true) {
+      const initialSrc = resolvedImageUrls[herb.id] || getCandidatePaths(herb)[0];
+      return `
+        <div class="img-frame" onclick="openLightbox(this.querySelector('img')?.src)" title="點擊放大檢視飲片細節">
+          <img
+            src="${initialSrc}"
+            data-step="0"
+            alt="${blindMode ? '中藥材盲測照片' : herb.name}"
+            onerror="handleImgFallback(this, ${herb.id})"
+          />
+          <span class="img-overlay-badge">${blindMode ? '跑台盲測' : `#${herb.id} ${herb.name}`}</span>
+          <span class="img-zoom-hint">🔍 點擊放大</span>
+        </div>
+      `;
+    }
+
+    // 產生四選一干擾選項
+    function generateOptionsForPart(correctHerb) {
+      const allUniqueParts = [...new Set(HERBS_DATA.map(h => h.part))];
+      const relatedParts = [...new Set(
+        HERBS_DATA.filter(h => h.category === correctHerb.category && h.part !== correctHerb.part).map(h => h.part)
+      )];
+
+      let distractors = shuffleArray(relatedParts).slice(0, 2);
+      const remaining = shuffleArray(allUniqueParts.filter(p => p !== correctHerb.part && !distractors.includes(p)));
+      while (distractors.length < 3 && remaining.length > 0) {
+        distractors.push(remaining.pop());
+      }
+      return shuffleArray([correctHerb.part, ...distractors]);
+    }
+
+    function generateOptionsForIdentify(correctHerb) {
+      const sameCategory = HERBS_DATA.filter(h => h.id !== correctHerb.id && h.category === correctHerb.category);
+      const others = HERBS_DATA.filter(h => h.id !== correctHerb.id && h.category !== correctHerb.category);
+
+      let distractors = shuffleArray(sameCategory).slice(0, 2);
+      const rem = shuffleArray(others);
+      while (distractors.length < 3 && rem.length > 0) {
+        distractors.push(rem.pop());
+      }
+      return shuffleArray([correctHerb, ...distractors]);
+    }
+
+    // 渲染當前題目
+    function renderCurrentQuestion() {
+      const stage = document.getElementById('quizStage');
+
+      // 一輪結束畫面
+      if (currentIndex >= deck.length) {
+        const accuracy = deck.length > 0 ? Math.round((scoreCorrect / deck.length) * 100) : 0;
+        stage.innerHTML = `
+          <div class="card" style="padding: 36px 20px; text-align: center;">
+            <div style="font-size: 44px; margin-bottom: 10px;">🎉</div>
+            <h2 style="font-size: 22px; font-weight: 900; margin-bottom: 8px;">本輪 ${deck.length} 題練習完成！</h2>
+            <p style="color: var(--text-sub); margin-bottom: 22px; font-size: 15px;">
+              答對 <strong class="text-ok" style="font-size:18px;">${scoreCorrect}</strong> 題 ／
+              答錯 <strong class="text-err" style="font-size:18px;">${scoreWrong}</strong> 題
+              ${currentMode !== 'flashcard' ? `（正確率 <strong>${accuracy}%</strong>）` : ''}
+            </p>
+            <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:12px;">
+              <button onclick="reshuffleDeck()" class="btn-primary" style="flex:initial; padding:12px 24px;">
+                🔄 再來一輪（重新打散）
+              </button>
+              ${wrongIds.size > 0 ? `
+                <button onclick="setFilter('wrong')" class="mini-btn bookmarked" style="padding:12px 20px; font-size:14px;">
+                  📌 專攻錯題本 (${wrongIds.size} 題)
+                </button>
+              ` : ''}
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      const herb = deck[currentIndex];
+      const isBookmarked = wrongIds.has(herb.id);
+
+      // ================= 模式 1：填充題（看圖填名字＋藥用部位） =================
+      if (currentMode === 'fill') {
+        stage.innerHTML = `
+          <div class="card quiz-card">
+            <div class="quiz-header">
+              <div class="tag-row">
+                <span class="tag tag-green">✍️ 看圖填充（名字＋藥用部位）</span>
+                ${herb.isTrap ? '<span class="tag tag-amber">🔥 易混淆考點</span>' : ''}
+              </div>
+              <div class="tag-row">
+                <button onclick="showFillHint()" class="mini-btn hint-btn">💡 提示字數/首字</button>
+                <button onclick="toggleWrongBookmark(${herb.id})" class="mini-btn ${isBookmarked ? 'bookmarked' : ''}">
+                  ${isBookmarked ? '📌 已在錯題本' : '＋ 加入錯題本'}
+                </button>
+              </div>
+            </div>
+
+            <div class="quiz-grid">
+              <div>${renderImageBox(herb, true)}</div>
+
+              <div class="fill-form">
+                <div style="font-size:14px; font-weight:700; color:var(--herb-700);">
+                  請看圖輸入正確的「藥材名稱」與「藥用部位」：
+                </div>
+
+                <div id="fillHintBox" class="hint-callout ${fillHintShown ? '' : 'hidden'}">
+                  💡 <strong>提示：</strong>
+                  藥材名稱 <strong>${herb.name.length} 字</strong>（首字「<strong>${herb.name[0]}</strong>」），
+                  藥用部位 <strong>${herb.part.length} 字</strong>（首字「<strong>${herb.part[0]}</strong>」）。
+                </div>
+
+                <div class="field-group">
+                  <label for="inputHerbName">1. 藥材名稱 <span>（例：三七、川烏）</span></label>
+                  <input id="inputHerbName" type="text" autocomplete="off" class="text-input" placeholder="輸入藥材名稱後按 Enter..." />
+                </div>
+
+                <div class="field-group">
+                  <label for="inputHerbPart">2. 藥用部位 <span>（例：乾燥根、乾燥根莖）</span></label>
+                  <input id="inputHerbPart" type="text" autocomplete="off" class="text-input" placeholder="輸入藥用部位後按 Enter 送出..." />
+                </div>
+
+                <div id="fillActionButtons" class="btn-row">
+                  <button onclick="submitFillAnswer(false)" class="btn-primary">✓ 送出批改 (Enter)</button>
+                  <button onclick="submitFillAnswer(true)" class="btn-secondary">直接看答案</button>
+                </div>
+              </div>
+            </div>
+
+            <div id="fillFeedbackBox" class="hidden"></div>
+          </div>
+        `;
+
+        setTimeout(() => {
+          const nameInput = document.getElementById('inputHerbName');
+          const partInput = document.getElementById('inputHerbPart');
+          if (nameInput && !answeredCurrent) {
+            nameInput.focus();
+            nameInput.addEventListener('keydown', (e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                if (!answeredCurrent) partInput.focus();
+              }
+            });
+          }
+          if (partInput) {
+            partInput.addEventListener('keydown', (e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                if (!answeredCurrent) submitFillAnswer(false);
+                else nextQuestion();
+              }
+            });
+          }
+        }, 20);
+        return;
+      }
+
+      // ================= 模式 4：閃卡速刷 =================
+      if (currentMode === 'flashcard') {
+        stage.innerHTML = `
+          <div class="flash-wrap">
+            <div class="flashcard" onclick="flipCard()">
+              <div id="flashcardInner" class="flash-inner ${isCardFlipped ? 'flipped' : ''}">
+                <!-- 正面 -->
+                <div class="flash-face flash-front">
+                  <div class="quiz-header">
+                    <span class="tag tag-green">點擊卡片或按 Space 翻面</span>
+                    <button onclick="event.stopPropagation(); toggleWrongBookmark(${herb.id})" class="mini-btn ${isBookmarked ? 'bookmarked' : ''}">
+                      ${isBookmarked ? '📌 已在錯題本' : '＋ 加入錯題本'}
+                    </button>
+                  </div>
+                  <div style="margin: 12px 0;">${renderImageBox(herb, true)}</div>
+                  <div style="text-align:center; font-size:13px; color:var(--text-sub); font-weight:700;">
+                    盲測藥材名稱與藥用部位（翻面看解答）
+                  </div>
+                </div>
+
+                <!-- 背面 -->
+                <div class="flash-face flash-back">
+                  <div class="quiz-header">
+                    <span class="tag" style="background:rgba(255,255,255,0.16); color:#fff;">${herb.category}</span>
+                    <span style="font-size:12px; opacity:0.8;">編號 #${herb.id}</span>
+                  </div>
+                  <div style="text-align:center; margin: auto 0; padding: 12px 0;">
+                    <div style="font-size: 28px; font-weight: 900; margin-bottom: 8px;">${herb.name}</div>
+                    <div style="font-size: 22px; font-weight: 900; color: #fcd34d; margin-bottom: 18px;">
+                      ${herb.part}
+                    </div>
+                    <div style="background: rgba(255,255,255,0.12); border-radius: 14px; padding: 14px; text-align: left; font-size: 13px; line-height: 1.6;">
+                      <strong style="color:#fde68a;">💡 速記口訣：</strong>${herb.hint}
+                    </div>
+                  </div>
+                  <div style="text-align:center; font-size:12px; opacity:0.75;">點擊卡片翻回正面</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="btn-row">
+              <button onclick="handleFlashcardResult(false)" class="btn-secondary" style="flex:1; background:var(--rose-50); color:var(--rose-700); border-color:#fecdd3;">
+                😅 還不熟（收錄錯題）
+              </button>
+              <button onclick="handleFlashcardResult(true)" class="btn-primary" style="flex:1;">
+                ✅ 已記住（下一張）
+              </button>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      // ================= 模式 2 & 3：四選一選擇題 =================
+      if (!answeredCurrent) {
+        currentOptions = currentMode === 'part'
+          ? generateOptionsForPart(herb)
+          : generateOptionsForIdentify(herb);
+      }
+      const isIdentify = currentMode === 'identify';
+
+      stage.innerHTML = `
+        <div class="card quiz-card">
+          <div class="quiz-header">
+            <div class="tag-row">
+              <span class="tag tag-green">${isIdentify ? '🎯 看圖選名稱＋部位' : '🧬 給藥名選藥用部位'}</span>
+              ${herb.isTrap ? '<span class="tag tag-amber">🔥 易混淆考點</span>' : ''}
+            </div>
+            <button onclick="toggleWrongBookmark(${herb.id})" class="mini-btn ${isBookmarked ? 'bookmarked' : ''}">
+              ${isBookmarked ? '📌 已在錯題本' : '＋ 加入錯題本'}
+            </button>
+          </div>
+
+          <div class="quiz-grid">
+            <div>${renderImageBox(herb, isIdentify)}</div>
+            <div>
+              ${isIdentify ? `
+                <p style="font-size:13px; font-weight:700; color:var(--herb-700); margin-bottom:6px;">跑台看圖辨識：</p>
+                <h2 style="font-size:22px; font-weight:900; margin-bottom:10px;">請問圖中是哪一味中藥材？</h2>
+                <div style="background:#f8fafc; border:1px solid var(--border); border-radius:12px; padding:10px 12px; font-size:13px; color:var(--text-sub);">
+                  分類線索：<strong style="color:var(--text-main);">${herb.category}</strong>
+                </div>
+              ` : `
+                <p style="font-size:13px; font-weight:700; color:var(--herb-700); margin-bottom:6px;">請問下列藥材的「藥用部位」為何？</p>
+                <h2 style="font-size:32px; font-weight:900; margin-bottom:6px;">${herb.name}</h2>
+                <p style="font-size:12px; color:var(--text-sub);">編號 #${herb.id} • 請選出最精確的藥用部位</p>
+              `}
+            </div>
+          </div>
+
+          <div class="options-grid">
+            ${currentOptions.map((opt, idx) => {
+              const label = isIdentify
+                ? `<span><strong>${opt.name}</strong> <span style="color:#94a3b8;">|</span> <strong style="color:var(--herb-700);">${opt.part}</strong></span>`
+                : `<strong>${opt}</strong>`;
+              return `
+                <button onclick="selectOption(${idx})" id="opt-btn-${idx}" class="opt-btn">
+                  <span class="opt-num">${idx + 1}</span>
+                  <span>${label}</span>
+                </button>
+              `;
+            }).join('')}
+          </div>
+
+          <div id="feedbackBox" class="hidden"></div>
+        </div>
+      `;
+    }
+
+    // 選擇題批改
+    function selectOption(idx) {
+      if (answeredCurrent) return;
+      answeredCurrent = true;
+
+      const herb = deck[currentIndex];
+      const isIdentify = currentMode === 'identify';
+      const chosen = currentOptions[idx];
+      const isCorrect = isIdentify ? (chosen.id === herb.id) : (chosen === herb.part);
+
+      if (isCorrect) {
+        scoreCorrect++;
+      } else {
+        scoreWrong++;
+        wrongIds.add(herb.id);
+        saveWrongIds();
+      }
+      updateStatsUI();
+
+      currentOptions.forEach((opt, i) => {
+        const btn = document.getElementById(`opt-btn-${i}`);
+        btn.disabled = true;
+        const optIsRight = isIdentify ? (opt.id === herb.id) : (opt === herb.part);
+        if (optIsRight) btn.classList.add('opt-correct');
+        else if (i === idx && !isCorrect) btn.classList.add('opt-wrong');
+        else btn.classList.add('opt-dim');
+      });
+
+      const fb = document.getElementById('feedbackBox');
+      fb.className = `feedback-box ${isCorrect ? 'ok' : 'err'}`;
+      fb.innerHTML = `
+        <div>
+          <div style="font-weight:900; font-size:16px; color:${isCorrect ? 'var(--emerald-700)' : 'var(--rose-700)'}; margin-bottom:4px;">
+            ${isCorrect ? '✅ 答對了！' : '❌ 答錯了（已自動收入錯題本）'}
+          </div>
+          <div style="font-size:14px; margin-bottom:4px;">
+            正解：<strong>${herb.name}</strong> — <strong style="color:var(--herb-700); text-decoration:underline;">${herb.part}</strong>
+          </div>
+          <div style="font-size:12px; color:var(--text-sub);">💡 記憶提示：${herb.hint}</div>
+        </div>
+        <button onclick="nextQuestion()" class="btn-next">下一題 (Space) →</button>
+      `;
+    }
+
+    // 字串正規化（忽略空白、統一括號與常見異體字）
+    function normalizeText(str) {
+      return (str || '')
+        .trim()
+        .replace(/\s+/g, '')
+        .replace(/\(/g, '（')
+        .replace(/\)/g, '）')
+        .replace(/术/g, '朮')
+        .replace(/曲/g, '麴')
+        .replace(/棱/g, '稜')
+        .replace(/瓜蔞/g, '栝樓');
+    }
+
+    function showFillHint() {
+      fillHintShown = true;
+      const box = document.getElementById('fillHintBox');
+      if (box) box.classList.remove('hidden');
+    }
+
+    // 填充題批改
+    function submitFillAnswer(giveUp = false) {
+      if (answeredCurrent) return;
+      const nameInput = document.getElementById('inputHerbName');
+      const partInput = document.getElementById('inputHerbPart');
+      const rawName = nameInput ? nameInput.value : '';
+      const rawPart = partInput ? partInput.value : '';
+
+      if (!giveUp && !rawName.trim() && !rawPart.trim()) {
+        showToast('請輸入藥材名稱或藥用部位，或點選「直接看答案」');
+        if (nameInput) nameInput.focus();
+        return;
+      }
+
+      answeredCurrent = true;
+      const herb = deck[currentIndex];
+      const normName = normalizeText(rawName);
+      const normPart = normalizeText(rawPart);
+
+      const validNames = (herb.aliases || [herb.name]).map(normalizeText);
+      const isNameOk = !giveUp && validNames.includes(normName);
+      const isPartOk = !giveUp && (normPart === normalizeText(herb.part));
+      const allOk = isNameOk && isPartOk;
+
+      if (allOk) {
+        scoreCorrect++;
+      } else {
+        scoreWrong++;
+        wrongIds.add(herb.id);
+        saveWrongIds();
+      }
+      updateStatsUI();
+
+      if (nameInput) {
+        nameInput.disabled = true;
+        nameInput.classList.add(isNameOk ? 'correct' : 'wrong');
+      }
+      if (partInput) {
+        partInput.disabled = true;
+        partInput.classList.add(isPartOk ? 'correct' : 'wrong');
+      }
+
+      const actionBtns = document.getElementById('fillActionButtons');
+      if (actionBtns) actionBtns.classList.add('hidden');
+
+      const fb = document.getElementById('fillFeedbackBox');
+      fb.className = `feedback-box ${allOk ? 'ok' : 'err'}`;
+      fb.innerHTML = `
+        <div>
+          <div style="font-weight:900; font-size:16px; color:${allOk ? 'var(--emerald-700)' : 'var(--rose-700)'}; margin-bottom:6px;">
+            ${allOk ? '🎉 完全正確！兩格全對！' : giveUp ? '📖 已顯示解答（已收入錯題本）' : '❌ 批改結果如下（已自動收入錯題本）'}
+          </div>
+          <div style="font-size:14px; display:flex; flex-wrap:wrap; gap:14px; margin-bottom:4px;">
+            <span>
+              ${isNameOk ? '✅' : '❌'} 名稱：<strong>${herb.name}</strong>
+              ${!isNameOk && rawName.trim() ? `<span style="font-size:12px; color:var(--rose-700);">（你的作答：${rawName.trim()}）</span>` : ''}
+            </span>
+            <span>
+              ${isPartOk ? '✅' : '❌'} 部位：<strong style="color:var(--herb-700); text-decoration:underline;">${herb.part}</strong>
+              ${!isPartOk && rawPart.trim() ? `<span style="font-size:12px; color:var(--rose-700);">（你的作答：${rawPart.trim()}）</span>` : ''}
+            </span>
+          </div>
+          <div style="font-size:12px; color:var(--text-sub);">💡 記憶提示：${herb.hint}</div>
+        </div>
+        <button id="fillNextBtn" onclick="nextQuestion()" class="btn-next">下一題 (Enter) →</button>
+      `;
+
+      setTimeout(() => {
+        const nextBtn = document.getElementById('fillNextBtn');
+        if (nextBtn) nextBtn.focus();
+      }, 20);
+    }
+
+    function nextQuestion() {
+      currentIndex++;
+      answeredCurrent = false;
+      isCardFlipped = false;
+      fillHintShown = false;
+      updateStatsUI();
+      renderCurrentQuestion();
+    }
+
+    function flipCard() {
+      isCardFlipped = !isCardFlipped;
+      const inner = document.getElementById('flashcardInner');
+      if (inner) inner.classList.toggle('flipped', isCardFlipped);
+    }
+
+    function handleFlashcardResult(remembered) {
+      const herb = deck[currentIndex];
+      if (remembered) {
+        scoreCorrect++;
+      } else {
+        scoreWrong++;
+        wrongIds.add(herb.id);
+        saveWrongIds();
+      }
+      nextQuestion();
+    }
+
+    function toggleWrongBookmark(id) {
+      if (wrongIds.has(id)) {
+        wrongIds.delete(id);
+        showToast('已從錯題本移除');
+      } else {
+        wrongIds.add(id);
+        showToast('已加入錯題本');
+      }
+      saveWrongIds();
+      renderCurrentQuestion();
+    }
+
+    function toggleCheatSheet() {
+      const panel = document.getElementById('cheatSheetPanel');
+      panel.classList.toggle('hidden');
+      if (!panel.classList.contains('hidden')) {
+        renderCheatSheet();
+        panel.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    function renderCheatSheet() {
+      const grid = document.getElementById('cheatSheetGrid');
+      grid.innerHTML = HERBS_DATA.map(herb => {
+        const src = resolvedImageUrls[herb.id] || getCandidatePaths(herb)[0];
+        return `
+          <div class="sheet-item">
+            <img src="${src}" alt="${herb.name}" class="sheet-thumb" onclick="openLightbox(this.src)" style="cursor:zoom-in;" onerror="this.style.visibility='hidden'" />
+            <div style="min-width:0;">
+              <div style="font-size:14px; font-weight:800;">${herb.id}. ${herb.name}</div>
+              <div style="font-size:13px; font-weight:900; color:var(--herb-700);">${herb.part}</div>
+              <div style="font-size:11px; color:var(--text-sub);">${herb.category}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // 鍵盤快捷鍵
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeLightbox();
+        return;
+      }
+      if (currentIndex >= deck.length) return;
+
+      if (currentMode === 'fill') {
+        if (e.key === 'Enter' && answeredCurrent && document.activeElement?.tagName !== 'BUTTON') {
+          e.preventDefault();
+          nextQuestion();
+        }
+        return;
+      }
+
+      if (currentMode === 'flashcard') {
+        if (e.code === 'Space') {
+          e.preventDefault();
+          flipCard();
+        } else if (e.key === 'ArrowRight') {
+          handleFlashcardResult(true);
+        } else if (e.key === 'ArrowLeft') {
+          handleFlashcardResult(false);
+        }
+      } else {
+        if (['1', '2', '3', '4'].includes(e.key) && !answeredCurrent) {
+          selectOption(parseInt(e.key, 10) - 1);
+        } else if ((e.code === 'Space' || e.key === 'Enter') && answeredCurrent) {
+          e.preventDefault();
+          nextQuestion();
+        }
+      }
+    });
+
+    // 啟動初始化
+    window.addEventListener('DOMContentLoaded', () => {
+      saveWrongIds();
+      reshuffleDeck(false);
+      autoDetectLocalImages();
+    });
+  </script>
+</body>
+</html>
